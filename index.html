@@ -2,10 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <script src="script.js"></script>
+    <script defer src="script.js"></script>
     <title>Rock Paper Scissors</title>
 </head>
 <body>
-    Hello world!
+    <p>Game of rock, paper and scissors! Choose one:</p>
+    <button class="choice" id="ROCK">Rock</button>
+    <button class="choice" id="PAPER">Paper</button>
+    <button class="choice" id="SCISSORS">Scissors</button>
+
+    <div class="score">
+        <p id="player"></p>
+        <p id="computer"></p>
+        <p id="winner"></p>
+    </div>
+
+    <div class="results"></div>
 </body>
 </html>

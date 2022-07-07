@@ -1,78 +1,96 @@
-console.log("Hello World");
-
 function computerPlay() {
     randomNum = Math.floor(Math.random() * 3);
     switch (randomNum) {
         case 0:
-            return 'Rock';
+            return 'ROCK';
             break;
         case 1:
-            return 'Paper';
+            return 'PAPER';
             break;
         case 2:
-            return 'Scissors';
+            return 'SCISSORS';
             break;
     }
 }
 
-function playRound(playerSelection, computerSelection) {
-    const playerChoice = playerSelection.toUpperCase();
-    const computerChoice = computerSelection.toUpperCase();
+function playRound(e) {
+    const playerChoice = e.target.id;
+    const computerChoice = computerPlay();
+    const para = document.createElement('p');
 
     if (playerChoice === computerChoice) {
-        return `You Tie! ${playerSelection} ties with ${computerSelection}`;
+        para.textContent = `You Tie! ${playerChoice} ties with ${computerChoice}`;
+        results.appendChild(para);
+        updateScore();
+        return;
     }
 
     switch (playerChoice) {
         case 'ROCK':
             if (computerChoice === 'PAPER') {
                 loseCount++;
-                return 'You Lose! Paper beats Rock';
+                para.textContent = 'You Lose! PAPER beats ROCK';
+                results.appendChild(para);
+                updateScore();
+                break;
             }
             else {
                 winCount++;
-                return 'You Win! Rock beats Scissors';
+                para.textContent = 'You Win! ROCK beats SCISSORS';
+                results.appendChild(para);
+                updateScore();
+                break;
             }
         case 'PAPER':
             if (computerChoice === 'ROCK') {
                 winCount++;
-                return 'You Win! Paper beats Rock';
+                para.textContent = 'You Win! PAPER beats ROCK';
+                results.appendChild(para);
+                updateScore();
+                break;
             }
             else {
                 loseCount++;
-                return 'You Lose! Scissors beats Paper';
+                results.textContent = 'You Lose! SCISSORS beats PAPER';
+                results.appendChild(para);
+                updateScore();
+                break;
             }
         case 'SCISSORS':
             if (computerChoice === 'PAPER') {
                 winCount++;
-                return 'You Win! Scissors beats Paper';
+                para.textContent = 'You Win! SCISSORS beats PAPER';
+                results.appendChild(para);
+                updateScore();
+                break;
             }
             else {
                 loseCount++;
-                return 'You Lose! Rock beats Scissors';
+                para.textContent = 'You Lose! ROCK beats SCISSORS';
+                results.appendChild(para);
+                updateScore();
+                break;
             }
     }
 }
 
-function game() {
-    for (let i = 0; i < 5; i++) {
-        const playerSelection = prompt('Choose one: Rock / Paper / Scissors', 'rock');
-        const computerSelection = computerPlay();
-        let roundResult = playRound(playerSelection, computerSelection);
-        console.log(roundResult);
-    }
-    
-    if (winCount > loseCount) {
-        console.log("Player wins game!");
-    }
-    else if (winCount < loseCount) {
-        console.log("Computer wins game!");
-    }
-    else {
-        console.log("Game is a tie!");
+function updateScore() {
+    const player = document.querySelector('.score #player');
+    const computer = document.querySelector('.score #computer');
+
+    player.textContent = `Player Score: ${winCount}`;
+    computer.textContent = `Computer Score: ${loseCount}`;
+
+    const winner = document.querySelector('.score #winner');
+    if (winCount >= 5) {
+        winner.textContent = 'Winner of game is Player!';
+    } else if (loseCount >= 5) {
+        winner.textContent = 'Winner of game is Computer!';
     }
 }
 
 let winCount = 0;
 let loseCount = 0;
-game();
+const results = document.querySelector('.results');
+const buttons = document.querySelectorAll('.choice');
+buttons.forEach(button => button.addEventListener('click', playRound));
